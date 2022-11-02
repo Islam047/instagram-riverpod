@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "905773685370",
+    "project_id": "instagram-clone-riverpod",
+    "storage_bucket": "instagram-clone-riverpod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905773685370:android:2a6ee30db2eb6febdc39c3",
+        "android_client_info": {
+          "package_name": "com.example.instagram_clone_riverpod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905773685370-knir3ov2eog3a5mm9cech47kfbkiuirh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.instagram_clone_riverpod",
+            "certificate_hash": "31579e5d03f6fb9152ded17d3eac5b07ed70b83a"
+          }
+        },
+        {
+          "client_id": "905773685370-mcjn8rkp1ml15u10mpof12p92pkihqsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBraSEWEQC7-BIYToyGvQOrLVUrSey21oA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905773685370-mcjn8rkp1ml15u10mpof12p92pkihqsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
