@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'dart:developer' as devtools show log;
+import 'dart:developer' as devtools show log;
 import 'package:instagram_clone_riverpod/state/auth/providers/auth_state_provider.dart';
 import 'package:instagram_clone_riverpod/state/auth/providers/is_logged_in_provider.dart';
+import 'package:instagram_clone_riverpod/views/components/loading/loading_screen.dart';
 
-// extension Log on Object {
-//   void log() => devtools.log(toString());
-// }
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,16 +51,21 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Main View"),
       ),
       body: Consumer(
-        builder: (context, ref, child) {
+        // GOOD POINT WITH CONTEXT'S WIDTH AND HEIGHT
+        builder: (_, ref, child) {
           return TextButton(
-            onPressed: ()  =>
-               ref.read(authStateProvider.notifier).logOut(),
+            onPressed: ()  {
+              // LoadingScreen.instance().show(context: context,text: "Hello World");
+              ref.read(authStateProvider.notifier).logOut();
+
+            },
 
             child: const Text("Log Out"),
           );
@@ -84,7 +90,7 @@ class LoginView extends ConsumerWidget {
       body: Column(
         children: [
           TextButton(
-            onPressed: () => ref.read(authStateProvider.notifier).loginWithGoogle(),
+            onPressed: ()=>ref.read(authStateProvider.notifier).loginWithGoogle(),
             child: const Text(
               "Sign In with Google",
             ),
