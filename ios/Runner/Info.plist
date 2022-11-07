@@ -2,10 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>${PRODUCT_NAME} would like to access your photos</string>
+<key>LSApplicationQueriesSchemes</key>
 
 <key>LSApplicationQueriesSchemes</key>
 <array>
-    <string>fbapi</string>
+    <string>fb656263392886281</string>
     <string>fbapi20130214</string>
     <string>fbapi20130410</string>
     <string>fbapi20130702</string>
@@ -27,12 +30,12 @@
   <dict>
   <key>CFBundleURLSchemes</key>
   <array>
-    <string>fb1494522197691430</string>
+    <string>fb656263392886281</string>
   </array>
   </dict>
 </array>
 <key>FacebookAppID</key>
-<string>1494522197691430</string>
+<string>656263392886281</string>
 <key>FacebookClientToken</key>
 <string>11d43b6c685d3afe222541d4794d18f4</string>
 <key>FacebookDisplayName</key>

@@ -12,9 +12,12 @@ class Authenticator {
   // getters
 
   bool get isAlreadyLoggedIn => userId != null;
+
   UserId? get userId => FirebaseAuth.instance.currentUser?.uid;
+
   String get displayName =>
       FirebaseAuth.instance.currentUser?.displayName ?? '';
+
   String? get email => FirebaseAuth.instance.currentUser?.email;
 
   Future<void> logOut() async {
@@ -26,6 +29,7 @@ class Authenticator {
   Future<AuthResult> loginWithFacebook() async {
     final loginResult = await FacebookAuth.instance.login();
     final token = loginResult.accessToken?.token;
+
     if (token == null) {
       return AuthResult.aborted;
     }
@@ -43,7 +47,7 @@ class Authenticator {
           email != null &&
           credential != null) {
         final providers =
-        await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
         if (providers.contains(Constants.googleCom)) {
           await loginWithGoogle();
           FirebaseAuth.instance.currentUser?.linkWithCredential(credential);

@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'dart:developer' as devtools show log;
-import 'package:instagram_clone_riverpod/state/auth/providers/auth_state_provider.dart';
 import 'package:instagram_clone_riverpod/state/auth/providers/is_logged_in_provider.dart';
-import 'package:instagram_clone_riverpod/views/components/loading/loading_screen.dart';
-
-extension Log on Object {
-  void log() => devtools.log(toString());
-}
+import 'package:instagram_clone_riverpod/state/providers/isLoading_provider.dart';
+import 'package:instagram_clone_riverpod/views/main/main_view.dart';
+import 'views/components/loading/loading_screen.dart';
+import 'views/login/login_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,94 +13,48 @@ void main() async {
   runApp(const ProviderScope(child: App()));
 }
 
-class App extends StatelessWidget {
-  const App({super.key});
+class App extends ConsumerWidget {
+  const App({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // calculate widget to show
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.blueGrey,
         indicatorColor: Colors.blueGrey,
       ),
       theme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primarySwatch: Colors.blue,
       ),
       themeMode: ThemeMode.dark,
-      home: Consumer(builder: (context, ref, child) {
-        final isLoggedIn = ref.watch(isLoggedInProvider);
-        if (isLoggedIn) {
-          return const MainView();
-        }
-        return const LoginView();
-      }),
-    );
-  }
-}
-
-// When you are already logged in
-class MainView extends StatelessWidget {
-  const MainView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Main View"),
-      ),
-      body: Consumer(
-        // GOOD POINT WITH CONTEXT'S WIDTH AND HEIGHT
-        builder: (_, ref, child) {
-          return TextButton(
-            onPressed: ()  {
-              // LoadingScreen.instance().show(context: context,text: "Hello World");
-              ref.read(authStateProvider.notifier).logOut();
-
+      debugShowCheckedModeBanner: false,
+      home: Consumer(
+        builder: (context, ref, child) {
+          // install the loading screen
+          ref.listen<bool>(
+            isLoadingProvider,
+            (_, isLoading) {
+              if (isLoading) {
+                LoadingScreen.instance().show(context: context);
+              } else {
+                LoadingScreen.instance().hide();
+              }
             },
-
-            child: const Text("Log Out"),
           );
+          final isLoggedIn = ref.watch(isLoggedInProvider);
+          if (isLoggedIn) {
+            return const MainView();
+          } else {
+            return const LoginView();
+          }
         },
       ),
     );
   }
 }
 
-class LoginView extends ConsumerWidget {
-  const LoginView({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Login View"),
-      ),
-      body: Column(
-        children: [
-          TextButton(
-            onPressed: ()=>ref.read(authStateProvider.notifier).loginWithGoogle(),
-            child: const Text(
-              "Sign In with Google",
-            ),
-          ),
-          TextButton(
-            onPressed: () => ref.read(authStateProvider.notifier).loginWithFacebook(),
-            child: const Text(
-              "Sign In with Facebook",
-            ),
-          ),
-        ],
-      ),
-    );
-
-  }
-}

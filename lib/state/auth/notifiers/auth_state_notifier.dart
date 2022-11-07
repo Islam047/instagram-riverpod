@@ -46,6 +46,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     if (result == AuthResult.success && userId != null) {
       await saveUserInfo(userId: userId);
     }
+
     state = AuthState(
       result: result,
       isLoading: false,
@@ -57,5 +58,5 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
       _userInfoStorage.saveUserInfo(
           userId: userId,
           displayName: _authenticator.displayName,
-          email: _authenticator.email);
+          email: _authenticator.email,);
 }
