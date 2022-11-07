@@ -15,7 +15,10 @@ class PostDisplayNameAndMessageView extends ConsumerWidget {
     final userInfoModel = ref.watch(userInfoModelProvider(post.userId));
     return userInfoModel.when(
         data: (userInfoModel) {
-          return RichTwoPartsText(leftPart: userInfoModel.displayName, rightPart: post.message);
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8.0,left: 8.0),
+            child: RichTwoPartsText(leftPart: userInfoModel.displayName, rightPart: post.message),
+          );
         },
         error: (error, stackTrace) {
           return const SmallErrorAnimationView();
